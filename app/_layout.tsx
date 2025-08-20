@@ -1,29 +1,20 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import { Stack } from "expo-router";
+import { SafeAreaView } from "react-native";
 
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
-
-  if (!loaded) {
-    // Async font loading only occurs in development.
-    return null;
-  }
-
+export default function Layout() {
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
+    <SafeAreaView style={{ flex: 1 }}>
+      <Stack screenOptions={{ headerShadowVisible: false }}>
+        <Stack.Screen name="index" options={{ title: "Cases" }} />
+        <Stack.Screen name="new" options={{ title: "New Case" }} />
+        <Stack.Screen name="case/[id]" options={{ title: "Case" }} />
+        <Stack.Screen name="case/[id]/capture" options={{ title: "Capture" }} />
+        <Stack.Screen
+          name="case/[id]/arrangements"
+          options={{ title: "Arrangements" }}
+        />
+        <Stack.Screen name="case/[id]/publish" options={{ title: "Publish" }} />
       </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    </SafeAreaView>
   );
 }
